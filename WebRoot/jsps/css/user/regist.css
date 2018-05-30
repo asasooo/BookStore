@@ -1,0 +1,12 @@
+body{color: #404040;}
+.divBody{margin-left: 240px;}
+.divTitle{height: 30px; width: 880px; border: 1px #d0d0d0 solid; background-image: url('/goods/images/bg_btns.png'); background-position: 0px -132px; line-height: 30px;}
+.spanTitle{font-weight: 900; margin-left: 18px;}
+.divCenter{width: 880px; height: 400px; border-left: 1px #d0d0d0 solid; border-right: 1px #d0d0d0 solid; border-bottom: 1px #d0d0d0 solid;}
+table{line-height: 50px;}
+.tdLabel{text-align: right; width: 300px;}
+.tdInput{width: 250px;}
+.tdError{width: 300px;}
+.labelError{line-height: 32px; font-size: 10pt; color: #f40000; border: 1px #ffb8b8 solid; padding: 8px 8px 8px 35px; background: url(/goods/images/error.png) no-repeat; background-color: #fef2f2;}
+.input{width: 240px; height: 32px; border: 1px #7f9db9 solid; padding-left: 10px; line-height: 32px;}
+.verifyCodeImg{width: 240px; height: 60px; border: 1px #e2e2e2 solid; display: inline-block; line-height: 60px; text-align: center;}
