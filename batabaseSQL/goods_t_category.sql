@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: goods
+-- ------------------------------------------------------
+-- Server version	5.7.20-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `t_category`
+--
+
+DROP TABLE IF EXISTS `t_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_category` (
+  `cid` char(32) NOT NULL,
+  `cname` varchar(50) DEFAULT NULL,
+  `pid` char(32) DEFAULT NULL,
+  `desc` varchar(100) DEFAULT NULL,
+  `orderBy` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`cid`),
+  UNIQUE KEY `cname` (`cname`),
+  KEY `FK_t_category_t_category` (`pid`),
+  KEY `orderBy` (`orderBy`),
+  CONSTRAINT `FK_t_category_t_category` FOREIGN KEY (`pid`) REFERENCES `t_category` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_category`
+--
+
+LOCK TABLES `t_category` WRITE;
+/*!40000 ALTER TABLE `t_category` DISABLE KEYS */;
+INSERT INTO `t_category` VALUES ('1','程序设计',NULL,'程序设计相关',1),('2','办公室用书',NULL,'办公室用书',2),('3','图形 图像 多媒体',NULL,'图形图像多媒体',3),('4','操作系统/系统开发',NULL,'操作系统/系统开发',4),('458795C27E7346A8A5F1B942319297E0','系统开发','4','系统开发分类',29),('4D01FFF0CB94468EA907EF42780668AB','购买指南 组装指南 维修','2','购买指南 组装指南 维修分类',18),('5','数据库',NULL,'数据库',5),('56AD72718C524147A2485E5F4A95A062','3DS MAX','3','3DS MAX分类',21),('57DE3C2DDA784B81844029A28217698C','Dreamweaver','3','Dreamweaver分类',24),('5F79D0D246AD4216AC04E9C5FAB3199E','Java Javascript','1','Java Javascript分类',10),('6','网络与数据通讯',NULL,'网络与数据通讯!',6),('65640549B80E40B1981CDEC269BFFCAD','Photoshop','3','Photoshop分类',20),('65830AB237EF428BAE9B7ADC78A8D1F6','Unix','4','Unix分类',28),('84ECE401C2904DBEA560D04A581A66D9','HTML XML','1','HTML XML分类',13),('922E6E2DB04143D39C9DDB26365B3EE8','C C++ VC VC++','1','C C++ VC VC++分类',12),('96F209F79DB242E9B99CC1B98FAB01DB','数据库理论','5','数据库理论分类',33),('A9CFBED0F77746C5BD751F2502FAB2CD','电子商务 电子政务','6','电子商务 电子政务分类',35),('B596ECE0F9BF40288F40A66B35551806','Flush','3','Flush分类',23),('B92ED191DBE647BE8F75721FB231E207','因特网 电子邮件','2','因特网 电子邮件分类',19),('C3F9FAAF4EA64857ACFAB0D9C8D0E446','PHP','1','PHP分类',14),('C4DD8CA232864B31A367EE135D86382C','计算机初级入门','2','计算机初级入门分类',17),('C8E274EE5C99499080A98E24F0BD2E03','.NET','1','.NET分类',15),('D45D96DA359A4FEAB3AB4DCF2157FC06','JSP','1','JSP分类',11),('DCAD0384A6444C048951C7B36C5D96EE','Flash','3','Flash分类',25),('F4FBD087EB054CA1896093F172AC33D9','数据仓库与数据挖掘','5','数据仓库与数据挖掘分类',30),('F5C091B3967442A2B35EFEFC4EF8746F','微软Office','2','微软Office分类',16),('FAB7B7F7084F4D57A0808ADC61117683','Windows','4','Windows分类',26);
+/*!40000 ALTER TABLE `t_category` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-05-31  0:06:16
