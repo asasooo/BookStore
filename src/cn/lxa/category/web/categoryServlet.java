@@ -15,7 +15,6 @@ import cn.lxa.category.domain.category;
 import cn.lxa.category.service.categoryService;
 
 public class categoryServlet extends HttpServlet {
-
 	// 映射执行方法BasicServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Class c = this.getClass();
@@ -39,6 +38,7 @@ public class categoryServlet extends HttpServlet {
 			Method m = c.getMethod(method, HttpServletRequest.class,HttpServletResponse.class);
 			try {
 				m.invoke(this, request,response);
+				System.out.println(method);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
@@ -54,11 +54,54 @@ public class categoryServlet extends HttpServlet {
 		req.getRequestDispatcher("/jsps/left.jsp").forward(req, resp);
 	}
 	
+	public void findAllToEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+		categoryService cs = new categoryService();
+		List<category> list = cs.findAll();
+		req.setAttribute("parents", list);
+		req.getRequestDispatcher("/adminjsps/admin/book/left.jsp").forward(req, resp);
+	}
+	
 	public void findAlltoList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
 		categoryService cs = new categoryService();
 		List<category> list = cs.findAll();
 		req.setAttribute("category", list);
 		req.getRequestDispatcher("/adminjsps/admin/category/list.jsp").forward(req, resp);
+	}
+	
+	public void findByPid(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException{
+		categoryService cs = new categoryService();
+		String pid = req.getParameter("pid");
+		List<category> list = cs.findByPid(pid);
+		String json = toJson(list);
+		resp.getWriter().print(json);
+	}
+	
+	private String toJson(category category) {
+		StringBuilder sb = new StringBuilder("{");
+		sb.append("\"cid\"").append(":").append("\"").append(category.getCid()).append("\"");
+		sb.append(",");
+		sb.append("\"cname\"").append(":").append("\"").append(category.getCname()).append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	private String toJson(List<category> categoryList) {
+		StringBuilder sb = new StringBuilder("[");
+		for(int i = 0; i < categoryList.size(); i++) {
+			sb.append(toJson(categoryList.get(i)));
+			if(i < categoryList.size() - 1) {
+				sb.append(",");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+
+	public void findAllToAddBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+		categoryService cs = new categoryService();
+		List<category> list = cs.findAll();
+		req.setAttribute("parents", list);
+		req.getRequestDispatcher("/adminjsps/admin/book/add.jsp").forward(req, resp);
 	}
 	
 	public void addACategory(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException{

@@ -46,6 +46,13 @@
     <description>This is the description of my J2EE component</description>
     <servlet-class>cn.lxa.admin.web.AdminCategoryServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AddBookServlet</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>cn.lxa.book.web.AddBookServlet</servlet-class>
+  </servlet>
+
 
 
   <servlet-mapping>
@@ -79,5 +86,9 @@
   <servlet-mapping>
     <servlet-name>AdminCategoryServlet</servlet-name>
     <url-pattern>/AdminCategoryServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddBookServlet</servlet-name>
+    <url-pattern>/AddBookServlet</url-pattern>
   </servlet-mapping>
 </web-app>

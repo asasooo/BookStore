@@ -25,11 +25,11 @@
   
   <body>
 <p class="pLink">
-  <a href="<c:url value='/adminjsps/admin/order/list.jsp'/>">未付款</a>  | 
-  <a href="<c:url value='/adminjsps/admin/order/list.jsp'/>">已付款</a>  | 
-  <a href="<c:url value='/adminjsps/admin/order/list.jsp'/>">已发货</a>  | 
-  <a href="<c:url value='/adminjsps/admin/order/list.jsp'/>">交易成功</a>  | 
-  <a href="<c:url value='/adminjsps/admin/order/list.jsp'/>">已取消</a>
+  <a href="<c:url value='/OrderServlet?method=findByStatus&status=1'/>">未付款</a>  | 
+  <a href="<c:url value='/OrderServlet?method=findByStatus&status=2'/>">已付款</a>  | 
+  <a href="<c:url value='/OrderServlet?method=findByStatus&status=3'/>">已发货</a>  | 
+  <a href="<c:url value='/OrderServlet?method=findByStatus&status=4'/>">交易成功</a>  | 
+  <a href="<c:url value='/OrderServlet?method=findByStatus&status=5'/>">已取消</a>
 </p>
 <div class="divMain">
 	<div class="title">
@@ -42,328 +42,66 @@
 	</div>
 	<br/>
 	<table align="center" border="0" width="100%" cellpadding="0" cellspacing="0">
-	
-	
-	
-	
+	<c:forEach items="${pb.beanList }" var="order">
 		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
+			<td width="320px">订单号：<a  href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">${order.oid }</a></td>
+			<td width="200px">下单时间：${order.ordertime }</td>
 			<td width="178px">&nbsp;</td>
 			<td width="205px">&nbsp;</td>
 			<td>&nbsp;</td>
 		</tr>
 		<tr style="padding-top: 10px; padding-bottom: 10px;">
 			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
+	<c:forEach items="${order.orderItemList }" var="orderitem">
+	<img border="0" width="70" src="<c:url value='/${orderitem.image_b }'/>"/>
+	</c:forEach>
 			</td>
 			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
+				<span class="price_t">&yen;${order.total }</span>
 			</td>
 			<td>
+			<c:choose>
+				<c:when test="${order.status eq 1 }">
 				等待付款
-<!-- 
+				</c:when>
+				<c:when test="${order.status eq 2 }">
 				准备发货
+				</c:when>
+				<c:when test="${order.status eq 3 }">
 				等待确认
+				</c:when>
+				<c:when test="${order.status eq 4 }">
 				交易成功
+				</c:when>
+				<c:when test="${order.status eq 5 }">
 				取消
- -->
+				</c:when>
+			</c:choose>
 			</td>
 			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
+				<c:choose>
+				<c:when test="${order.status eq 1 }">
+				<a href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">查看</a><br/>
+				<a href="<c:url value='/OrderServlet?method=adminUpdateStatus&status=5&oid=${order.oid }'/>">取消</a><br/>
+				</c:when>
+				<c:when test="${order.status eq 2 }">
+				<a href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">查看</a><br/>
+				<a href="<c:url value='/OrderServlet?method=adminUpdateStatus&status=5&oid=${order.oid }'/>">取消</a><br/>
+				<a href="<c:url value='/OrderServlet?method=adminUpdateStatus&status=3&oid=${order.oid }'/>">发货</a>
+				</c:when>
+				<c:when test="${order.status eq 3 }">
+				<a href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">查看</a><br/>
+				</c:when>
+				<c:when test="${order.status eq 4 }">
+				<a href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">查看</a><br/>
+				</c:when>
+				<c:when test="${order.status eq 5 }">
+				<a href="<c:url value='/OrderServlet?method=findByOid&oid=${order.oid }'/>">查看</a><br/>
+				</c:when>
+			</c:choose>
 			</td>
 		</tr>
-
-
-
-
-
-
-
-
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
-		<tr class="tt">
-			<td width="320px">订单号：<a  href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">E3A1EB6D0543489F9729B2B5BC5DB365</a></td>
-			<td width="200px">下单时间：2013-06-01 19:30:22</td>
-			<td width="178px">&nbsp;</td>
-			<td width="205px">&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr style="padding-top: 10px; padding-bottom: 10px;">
-			<td colspan="2">
-
-	<img border="0" width="70" src="<c:url value='/book_img/23254532-1_b.jpg'/>"/>
-
-			</td>
-			<td style="padding-left: 0">
-				<span class="price_t">&yen;203.5</span>
-			</td>
-			<td>
-				等待付款
-<!-- 
-				准备发货
-				等待确认
-				交易成功
-				取消
- -->
-			</td>
-			<td>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">查看</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">取消</a><br/>
-				<a href="<c:url value='/adminjsps/admin/order/desc.jsp'/>">发货</a>
-			</td>
-		</tr>
+	</c:forEach>	
 	</table>
 	<br/>
 	<%@include file="/jsps/pager/pager.jsp" %>

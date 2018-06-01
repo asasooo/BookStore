@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import cn.lxa.PageBean.Expression;
 import cn.lxa.PageBean.PageBean;
 import cn.lxa.book.Dao.PageDao;
@@ -34,5 +37,20 @@ public class BookService {
 	public Book findByBid(String bid) throws SQLException {
 		return bd.findByBid(bid);
 	}
-	
+
+	public void addBookInf(Book c) throws SQLException {
+		bd.addBookInf(c);
+	}
+
+	public Book load(String bid) throws SQLException {
+		return bd.load(bid);
+	}
+
+	public void edit(Book b) throws SQLException {
+		bd.edit(b);
+	}
+
+	public void delete(String bid) throws SQLException {
+		bd.delete(bid);
+	}
 }

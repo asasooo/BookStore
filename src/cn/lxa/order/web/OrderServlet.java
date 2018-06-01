@@ -79,6 +79,14 @@ public class OrderServlet extends HttpServlet {
 		return url;
 	}
 	
+	public void findAll(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		String url = getUrl(request);
+		int pc = getPc(request);
+		PageBean<Order> pb = os.findAll(url,pc);
+		request.setAttribute("pb", pb);
+		request.getRequestDispatcher("/adminjsps/admin/order/list.jsp").forward(request, response);
+	}
+	
 	public void findOrderByUid(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		String uid = (String) request.getSession().getAttribute("uid");
 		String url = getUrl(request);
@@ -94,6 +102,15 @@ public class OrderServlet extends HttpServlet {
 		Order order = orderList.get(0);
 		request.setAttribute("orderdesc", order);
 		request.getRequestDispatcher("/jsps/order/desc.jsp").forward(request, response);
+	}
+	
+	public void findByStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		String url = getUrl(request);
+		int status = Integer.parseInt(request.getParameter("status"));
+		int pc = getPc(request);
+		PageBean<Order> pb = os.findByStatus(url,pc,status);
+		request.setAttribute("pb", pb);
+		request.getRequestDispatcher("/adminjsps/admin/order/list.jsp").forward(request, response);
 	}
 	
 	public void addOrder(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
@@ -161,6 +178,14 @@ public class OrderServlet extends HttpServlet {
 		request.setAttribute("code", "success");
 		request.setAttribute("msg", "您的订单已取消！");
 		request.getRequestDispatcher("/jsps/msg2.jsp").forward(request, response);
+	}
+	
+	public void adminUpdateStatus(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		int status = Integer.parseInt(request.getParameter("status"));
+		String oid = request.getParameter("oid");
+		os.updateStatus(status,oid);
+		request.setAttribute("msg", "操作成功！");
+		request.getRequestDispatcher("/adminjsps/admin/msg.jsp").forward(request, response);
 	}
 	
 	public void pay(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{

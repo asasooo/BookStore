@@ -18,6 +18,6 @@
   </head>
   
   <body style="margin: 0px;">
-    <img src="<c:url value='/images/welcome.jpg'/>" width="100%" height="300px"/>
+    <img src="<c:url value='/images/welcome.jpg'/>" width="100%" height="100%"/>
   </body>
 </html>

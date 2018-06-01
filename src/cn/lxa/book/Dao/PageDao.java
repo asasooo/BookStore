@@ -3,6 +3,7 @@ package cn.lxa.book.Dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -128,5 +129,51 @@ public class PageDao {
 		String sql = "select * from t_book where bid=?";
 		Book book = qr.query(sql, new BeanHandler<Book>(Book.class),bid);
 		return book;
+	}
+
+	public void addBookInf(Book book) throws SQLException {
+		String sql = "insert into t_book(bid,bname,author,price,currPrice," +
+				"discount,press,publishtime,edition,pageNum,wordNum,printtime," +
+				"booksize,paper,cid,image_w,image_b)" +
+				" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = {book.getBid(),book.getBname(),book.getAuthor(),
+				book.getPrice(),book.getCurrPrice(),book.getDiscount(),
+				book.getPress(),book.getPublishtime(),book.getEdition(),
+				book.getPageNum(),book.getWordNum(),book.getPrinttime(),
+				book.getBooksize(),book.getPaper(), book.getParent().getCid(),
+				book.getImage_w(),book.getImage_b()};
+		qr.update(sql, params);
+	}
+
+	private int getMaxOrderBy(int cid) throws SQLException {
+		String sql = "select max(orderBy) from t_book where cid=?";
+		Number num = (Number) qr.query(sql, new ScalarHandler(),cid);
+		return num.intValue();
+	}
+
+	public Book load(String bid) throws SQLException {
+		String sql = "select * from t_book where bid=?";
+		Book b = qr.query(sql, new BeanHandler<Book>(Book.class),bid);
+		return b;
+	}
+
+	public void edit(Book book) throws SQLException {
+		delete(book.getBid());
+		String sql2 = "insert into t_book(bid,bname,author,price,currPrice," +
+				"discount,press,publishtime,edition,pageNum,wordNum,printtime," +
+				"booksize,paper,cid,image_w,image_b)" +
+				" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = {book.getBid(),book.getBname(),book.getAuthor(),
+				book.getPrice(),book.getCurrPrice(),book.getDiscount(),
+				book.getPress(),book.getPublishtime(),book.getEdition(),
+				book.getPageNum(),book.getWordNum(),book.getPrinttime(),
+				book.getBooksize(),book.getPaper(), book.getParent().getCid(),
+				book.getImage_w(),book.getImage_b()};
+		qr.update(sql2, params);
+	}
+
+	public void delete(String bid) throws SQLException {
+		String sql1 = "delete from t_book where bid=?";
+		qr.update(sql1,bid);
 	}
 }

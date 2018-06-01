@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -222,5 +223,11 @@ public class categoryDao {
 	public void updateCategoryInf(String cid, String cname, String desc) throws SQLException {
 		String sql = "update t_category set cname=?,`desc`=? where cid=?";
 		qr.update(sql,cname,desc,cid);
+	}
+
+	public List<category> findByPid(String pid) throws SQLException {
+		String sql = "select * from t_category where pid=?";
+		List<category> list = qr.query(sql, new BeanListHandler<category>(category.class),pid);
+		return list;
 	}
 }

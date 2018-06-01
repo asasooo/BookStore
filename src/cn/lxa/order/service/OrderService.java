@@ -57,4 +57,48 @@ public class OrderService {
 		return od.payFindByOid(oid);
 	}
 
+	public PageBean<Order> findAll(String url,int pc) throws SQLException {
+		PageBean pb = new PageBean();
+		try{ // 开始事物 结束事物
+			JdbcUtils.beginTransaction();
+			int ps = PageContents.OrderSize;
+			List<Order> list = od.findAll(pc);
+			int tr = od.getAllTr();
+			JdbcUtils.commitTransaction();
+			pb.setTr(tr);
+			pb.setBeanList(list);
+			pb.setPc(pc);
+			pb.setPs(ps);
+			pb.setTp();
+			pb.setUrl(url);
+		}catch(Exception e){
+			JdbcUtils.rollbackTransaction();
+			e.printStackTrace();
+			return pb ;
+		}
+		return pb;
+	}
+
+	public PageBean<Order> findByStatus(String url, int pc, int status) throws SQLException {
+		PageBean pb = new PageBean();
+		try{ // 开始事物 结束事物
+			JdbcUtils.beginTransaction();
+			int ps = PageContents.OrderSize;
+			List<Order> list = od.findByStatus(status,pc);
+			int tr = od.getTrByStatus(status);
+			JdbcUtils.commitTransaction();
+			pb.setTr(tr);
+			pb.setBeanList(list);
+			pb.setPc(pc);
+			pb.setPs(ps);
+			pb.setTp();
+			pb.setUrl(url);
+		}catch(Exception e){
+			JdbcUtils.rollbackTransaction();
+			e.printStackTrace();
+			return pb ;
+		}
+		return pb;
+	}
+
 }

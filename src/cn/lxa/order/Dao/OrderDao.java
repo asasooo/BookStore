@@ -11,7 +11,9 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
+import cn.lxa.PageBean.PageContents;
 import cn.lxa.order.domain.Order;
 import cn.lxa.order.domain.OrderItem;
 
@@ -71,6 +73,44 @@ public class OrderDao {
 		String sql = "select * from t_order where oid=?";
 		Order order = qr.query(sql,new BeanHandler<Order>(Order.class), oid);
 		return order;
+	}
+
+	public List<Order> findAll(int pc) throws SQLException {
+		String sql1 = "select * from t_order order by ordertime desc limit?,?";
+		int ps = PageContents.OrderSize;
+		List<Order> list = qr.query(sql1, new BeanListHandler<Order>(Order.class),(pc-1)*ps,ps);
+		for (Order order : list) {
+			String oid = order.getOid();
+			String sql2 = "select * from t_orderitem where oid=?";
+			List<OrderItem> itemList = qr.query(sql2, new BeanListHandler<OrderItem>(OrderItem.class),oid);
+			order.setOrderItemList(itemList);
+		}
+		return list;
+	}
+
+	public int getAllTr() throws SQLException {
+		String sql = "select count(*) from t_order";
+		Number num = (Number)qr.query(sql, new ScalarHandler());
+		return num.intValue();
+	}
+
+	public List<Order> findByStatus(int status,int pc ) throws SQLException {
+		String sql = "select * from t_order where status=? order by ordertime desc limit?,?";
+		int ps = PageContents.OrderSize;
+		List<Order> list = qr.query(sql, new BeanListHandler<Order>(Order.class),status,(pc-1)*ps,ps);
+		for (Order order : list) {
+			String oid = order.getOid();
+			String sql2 = "select * from t_orderitem where oid=?";
+			List<OrderItem> itemList = qr.query(sql2, new BeanListHandler<OrderItem>(OrderItem.class),oid);
+			order.setOrderItemList(itemList);
+		}
+		return list;
+	}
+
+	public int getTrByStatus(int status) throws SQLException {
+		String sql = "select count(*) from t_order where status=?";
+		Number num = (Number)qr.query(sql, new ScalarHandler(),status);
+		return num.intValue();
 	}
 	
 	}

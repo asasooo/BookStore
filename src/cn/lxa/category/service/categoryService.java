@@ -27,5 +27,7 @@ public class categoryService {
 	public void updateCategoryInf(String cid, String cname, String desc) throws SQLException {
 		cd.updateCategoryInf(cid,cname,desc);
 	}
-
+	public List<category> findByPid(String pid) throws SQLException {
+		return cd.findByPid(pid);
+	}
 }
