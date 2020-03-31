@@ -3,8 +3,7 @@
  _________________________________________________________________________
  
 
-教学视频及资料 百度云链接: https://pan.baidu.com/s/1RE4TO9JNb46x5tWhqEei1w 
-提取码: x21r 
+教学视频及资料 链接: https://pan.baidu.com/s/11WA3oHW7LztNH4t4jnyDAA 提取码: wypw
 
 -这个项目的邮箱验证功能不可用-
 
